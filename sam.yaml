@@ -1,0 +1,25 @@
+Transform: AWS::Serverless-2016-10-31
+Description: Example lambda gin
+Resources:
+  SampleFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: main
+      CodeUri: main.zip
+      Runtime: provided.al2023
+      MemorySize: 128
+      Policies: AWSLambdaBasicExecutionRole
+      Timeout: 3
+      Events:
+        GetResource:
+          Type: Api
+          Properties:
+            Path: /hello
+            Method: GET
+#Optional
+Outputs:
+  SampleGinApi:
+    Description: gin api
+    Value: !Sub 'https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/'
+    Export:
+      Name: SampleGinApi
